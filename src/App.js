@@ -1,13 +1,17 @@
-import React from 'react';
-import './App.css';
-import Loader from './loader/loader';
+import React from 'react'
+import './App.css'
+import Loader from './loader/loader'
 import Cards from './cards/cards'
+import Navbar from './navbar/navbar'
+import Lodash from 'lodash'
 
 class App extends React.Component {
 
   state = {
     isLoading: true,
-    data: []
+    data: [],
+    sort: 'desc',
+    sortField: 'name'
   }
 
   async componentDidMount(){
@@ -21,17 +25,41 @@ class App extends React.Component {
    })
   }
 
+  onSort = sortField => {
+    const clonedData = this.state.data.concat();
+    const sortType = this.state.sort === 'asc' ? 'desc' : 'asc'
+
+    const orderedData = Lodash.orderBy(clonedData, sortField, sortType);
+
+    this.setState ({
+      data: orderedData,
+      sort: sortType,
+      sortField
+    })
+  }
+
+  
+
+
   render(){
   return (
-    <div className="container">
-      {
-        this.state.isLoading
-          ? <Loader />
-          : <Cards 
-          data = {this.state.data}
-          />
-      }
+    <div>
+      <Navbar 
+      data={this.state.data}
+      onSort = {this.onSort}
+      />
+      <div className="container">
+        {
+          this.state.isLoading
+            ? <Loader />
+            :
+            <Cards
+              data={this.state.data}
+            />
+        }
+      </div>
     </div>
+    
   );
 }
 }

@@ -1,0 +1,15 @@
+.navbar-brand {
+  margin: 0 50px;
+  margin-right: 100px;
+}
+.bg-green {
+  background-color: #3b4256;
+}
+.nav-link {
+  border: 2px solid rgb(235, 235, 235);
+  border-radius: 10px;
+  margin-right: 20px;
+}
+.navbar-nav {
+  margin: 0 50px;
+}
