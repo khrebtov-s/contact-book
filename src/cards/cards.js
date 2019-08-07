@@ -9,7 +9,7 @@ export default (props) => (
           <div className="card">
             <div className="card-body">
               <div className="button-wrap">
-                <button type="button" className="btn btn-outline-info">Edit</button>
+                <button type="button" className="btn btn-outline-info" onClick = {props.onCardSelect.bind(null, item)}>Edit</button>
                 </div>
               <center className="m-t-30"> 
                 <img src={item.avatar} className="img-circle" width="150" alt="avatar" />
@@ -27,9 +27,7 @@ export default (props) => (
               <h6>{item.phone}</h6> 
               <small className="text-muted p-t-30 db">Address</small>
             <h6>{item.address.streetA}</h6>
-            
             </div>
-            
           </div>
         </div>
     ))}
