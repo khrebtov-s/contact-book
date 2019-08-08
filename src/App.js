@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactPaginate from 'react-paginate'
 import './App.css'
 import Loader from './loader/loader'
 import Cards from './cards/cards'
@@ -13,7 +14,9 @@ class App extends React.Component {
     data: [],
     sort: 'asc',
     sortField: 'name',
-    card: null
+    card: null,
+    search: ''
+    
   }
 
   async componentDidMount(){
@@ -33,23 +36,31 @@ class App extends React.Component {
   
   onSort = sortField => {
     const clonedData = this.state.data.concat();
-    const sortType = this.state.sort === 'asc' ? 'desc' : 'asc'
+    const sort = this.state.sort === 'asc' ? 'desc' : 'asc'
+    const data = Lodash.orderBy(clonedData, sortField, sort);
+    this.setState ({data, sort, sortField}) 
+  }
 
-    const orderedData = Lodash.orderBy(clonedData, sortField, sortType);
-
-    this.setState ({
-      data: orderedData,
-      sort: sortType,
-      sortField
-    })
+  searchHandler = search => {
+    this.setState({search});
   }
 
   onCardSelect = card => {
     this.setState({card});
   }
+  getFilteredData() {
+    const { data, search } = this.state
+
+    if (!search) {
+      return data
+    }
+    return data.filter(item => {
+      return item['name'].toLowerCase().includes(search.toLowerCase())
+    })
+  }
 
   render(){
-    
+    const filteredData = this.getFilteredData()
   return (
     <div>
       <Navbar 
@@ -57,6 +68,7 @@ class App extends React.Component {
       onSort = {this.onSort}
       sort = {this.state.sort}
       sortField = {this.state.sortField}
+      onSearch = {this.searchHandler}
       />
       {this.state.card
         ? <EditCardView
@@ -66,12 +78,34 @@ class App extends React.Component {
       <div className="container">
        { this.state.isLoading
             ? <Loader />
-            :
+          : <React.Fragment>
+            <cardSearch />
             <Cards
-              data = {this.state.data}
-              onCardSelect={this.onCardSelect}
-            />
+              data={this.state.data}
+                onCardSelect={this.onCardSelect}
+              />
+            </React.Fragment>
         }
+        {/* { this.state.data.length > pageSize
+            ? <ReactPaginate
+              previousLabel={'<'}
+              nextLabel={'>'}
+              breakClassName={'break-me'}
+              pageCount={8}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.pageChangeHandler}
+              containerClassName={'pagination'}
+              activeClassName={'active'}
+              pageClassName = "page-item"
+              pageLinkClassName ="page-link"
+              previousClassName = "page-item"
+              nextClassName ="page-item"
+              previousLinkClassName = "page-link"
+              nextLinkClassName="page-link"
+            />
+            : null
+        } */}
       </div>
     </div>
   );

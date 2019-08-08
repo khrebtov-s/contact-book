@@ -2,9 +2,8 @@ import React from 'react';
 import './cards.css';
 
 export default (props) => (
-
-  <div className="row">
-    {props.data.map(item => (
+      <div className="row">
+      {props.data.map(item => ( 
         <div className="col-lg-4 col-xlg-3 col-md-5" key={item.id}>
           <div className="card">
             <div className="card-body">

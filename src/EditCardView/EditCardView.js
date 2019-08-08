@@ -18,7 +18,9 @@ export default ({person}) =>(
                      <div className="profile-header-info">
                     <h4 className="m-t-10 m-b-5">{person.name}</h4>
                     <p className="m-b-10">{person.username}</p>
-                    <a href="#" className="btn btn-xs btn-success">Edit Profile</a>
+                        <a href="#" className="btn btn-xs btn-success" onClick={() => {
+                           localStorage.setItem('data', JSON.stringify({person}));
+                        }}>Edit Profile</a>
                      </div>
                   </div>
                   </div>
