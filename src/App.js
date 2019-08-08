@@ -19,8 +19,11 @@ class App extends React.Component {
   async componentDidMount(){
    const response = await fetch(`http://demo.sibers.com/users`);
    const api_data = await response.json();
-   localStorage.setItem('contacts', JSON.stringify(api_data));
-   const data = JSON.parse(localStorage.getItem('contacts'));
+    if (localStorage.getItem('data') == null) {
+      localStorage.setItem('data', JSON.stringify(api_data)); 
+      console.log('Contacts JSON successfully created on localStorage');
+    }
+   const data = JSON.parse(localStorage.getItem('data'));
    
    this.setState({
      isLoading: false,
@@ -44,9 +47,9 @@ class App extends React.Component {
   onCardSelect = card => {
     this.setState({card});
   }
-  
 
   render(){
+    
   return (
     <div>
       <Navbar 
@@ -55,14 +58,12 @@ class App extends React.Component {
       sort = {this.state.sort}
       sortField = {this.state.sortField}
       />
-      
+      {this.state.card
+        ? <EditCardView
+          person={this.state.card}
+        />
+        : true}
       <div className="container">
-        {this.state.card
-          ? <EditCardView
-            person={this.state.card}
-          />
-          : null
-        }
        { this.state.isLoading
             ? <Loader />
             :

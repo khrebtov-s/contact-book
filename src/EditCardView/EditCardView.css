@@ -1,6 +1,6 @@
 .modal-window {
   display: block;
-	position: fixed;
+	/* position: fixed; */
 	left: 0;
 	right: 0;
 	bottom: 0;
@@ -11,7 +11,7 @@
   background-color: #fff;
 }
 .modal-window__content {
-    position: fixed;
+    /* position: fixed; */
     width: 100%;
 }
 
@@ -429,7 +429,7 @@ select.form-control:not([size]):not([multiple]) {
     text-align: center;
 		border: none;
 		background-color: transparent;
-		color: #000;
+		color: #fff;
 		font-size: 4rem;
         cursor: pointer;
         z-index: 99;
